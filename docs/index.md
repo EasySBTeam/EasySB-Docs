@@ -6,7 +6,7 @@ hero:
   text: sing-box 五合一部署面板
   tagline: 一个面向 Linux VPS 的一体化面板：五个协议、证书签发、订阅生成与流量统计收进一套交互式菜单，sing-box 内核直接编译进二进制。
   image:
-    src: /logo.svg
+    src: /logo.png
     alt: EasySB
   actions:
     - theme: brand

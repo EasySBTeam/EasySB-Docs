@@ -6,7 +6,7 @@ hero:
   text: All-in-one sing-box deployment panel
   tagline: "An all-in-one panel for Linux VPS: five protocols, certificate issuance, subscription generation and traffic accounting in one interactive menu, with the sing-box core compiled into the binary."
   image:
-    src: /logo.svg
+    src: /logo.png
     alt: EasySB
   actions:
     - theme: brand
