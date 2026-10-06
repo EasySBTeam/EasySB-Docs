@@ -16,7 +16,7 @@ EasySB is one Go module at the repository root. Everything the program needs to 
 ├── install.sh                      # Installer: one command writes the source and installs
 ├── Makefile                        # Build / test / package entry point (see `make help`)
 ├── packaging/                      # Package lifecycle scripts (deb/) and apt repo builder (repo/)
-├── go.mod / go.sum                 # module github.com/MinimaxFlora/EasySB, Go 1.27.1
+├── go.mod / go.sum                 # module github.com/EasySB-Team/EasySB, Go 1.27.1
 ├── templates/                      # Readable JSONC samples and subscription templates
 │   ├── anytls/
 │   ├── hysteria2/
@@ -67,7 +67,7 @@ One release is tagged and named `v<VERSION>` and carries one `.deb` per architec
 
 The package carries the units but does not enable or start them: a fresh host has no node config, so the panel enables and starts services only after the user configures them. Because the packaged units live in `/usr/lib/systemd/system` while the panel writes its own into `/etc/systemd/system`, the panel's copy takes precedence while it exists and the packaged copy is a fallback; the two never fight over the same path.
 
-The fixed address apt needs is the GitHub Release itself: the release workflow builds `dist/repo` (a flat apt repository), signs it with the release key, and attaches every file to the release, so the one-command `install.sh` can write a source entry (`https://github.com/MinimaxFlora/EasySB/releases/latest/download`) that never changes. That one directory carries `install.sh`, the public key `easysb-archive-keyring.asc`, `Packages`/`Packages.gz`, the signed `Release`/`InRelease`/`Release.gpg` and one `.deb` per architecture; a single package serves every distribution, so there is no `dists/` split and no `pool/`.
+The fixed address apt needs is the GitHub Release itself: the release workflow builds `dist/repo` (a flat apt repository), signs it with the release key, and attaches every file to the release, so the one-command `install.sh` can write a source entry (`https://github.com/EasySB-Team/EasySB/releases/latest/download`) that never changes. That one directory carries `install.sh`, the public key `easysb-archive-keyring.asc`, `Packages`/`Packages.gz`, the signed `Release`/`InRelease`/`Release.gpg` and one `.deb` per architecture; a single package serves every distribution, so there is no `dists/` split and no `pool/`.
 
 ## Package responsibilities
 

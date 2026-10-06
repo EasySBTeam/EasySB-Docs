@@ -17,7 +17,7 @@ hero:
       link: /en/guide/intro
     - theme: alt
       text: GitHub
-      link: https://github.com/MinimaxFlora/EasySB
+      link: https://github.com/EasySB-Team/EasySB
 
 features:
   - title: Install with one command
@@ -37,10 +37,10 @@ features:
 
 ## Install with one command
 
-The install script checks the machine's `/etc/os-release` against the releases EasySB ships for, writes a signed apt source, and lets apt install the candidate version. The source is the GitHub Release itself, fixed at `https://github.com/MinimaxFlora/EasySB/releases/latest/download`, so one source entry keeps working indefinitely.
+The install script checks the machine's `/etc/os-release` against the releases EasySB ships for, writes a signed apt source, and lets apt install the candidate version. The source is the GitHub Release itself, fixed at `https://github.com/EasySB-Team/EasySB/releases/latest/download`, so one source entry keeps working indefinitely.
 
 ```bash
-curl -fsSL https://github.com/MinimaxFlora/EasySB/releases/latest/download/install.sh | sudo bash
+curl -fsSL https://github.com/EasySB-Team/EasySB/releases/latest/download/install.sh | sudo bash
 ```
 
 After install, open the panel with the shortcut:

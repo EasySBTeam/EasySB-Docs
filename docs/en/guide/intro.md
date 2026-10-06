@@ -6,7 +6,7 @@ title: Introduction
 
 EasySB is an all-in-one sing-box deployment panel for Linux VPS. It folds protocol deployment, certificate issuance, account and traffic management, subscription generation and host measurement into one dark full-screen menu, compiles to a single static binary, and is opened with the shortcut `sb`.
 
-- Project: https://github.com/MinimaxFlora/EasySB
+- Project: https://github.com/EasySB-Team/EasySB
 - Core upstream: https://github.com/SagerNet/sing-box
 - Full changelog: [Changelog](/en/changelog)
 - Frequently asked questions: [FAQ](/en/faq)
@@ -65,7 +65,7 @@ See [Supported Protocols](/en/features/protocols), [Subscription](/en/features/s
 ├── install.sh                    # One-command installer (writes the signed apt source and hands over to apt)
 ├── Makefile                      # Build, test and packaging entry point (see make help)
 ├── packaging/                    # Package lifecycle scripts (deb/) and apt repo builder (repo/)
-├── go.mod / go.sum               # module github.com/MinimaxFlora/EasySB, Go 1.27.1
+├── go.mod / go.sum               # module github.com/EasySB-Team/EasySB, Go 1.27.1
 ├── templates/                    # Readable JSONC protocol samples and subscription templates
 │   ├── anytls/
 │   ├── hysteria2/

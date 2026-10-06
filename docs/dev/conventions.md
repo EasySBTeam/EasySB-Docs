@@ -23,7 +23,7 @@ title: 约定
 - 程序版本独立于 sing-box 内核版本。
 - 发布标签是 `v<VERSION>`，发布名也是同一个字符串。工作流、`internal/update` 与发布说明都从版本推导标签；不要创建第二套命名方案。只保留最新一次发布：工作流在每次发布后清理更旧的 release 与其标签。
 - 发布资产是每个架构一个 `.deb`，即 `easysb_<version>-1_<arch>.deb`，其中 `<arch>` 用 Debian 拼写（`amd64`、`arm64`），`-1` 是软件包自身的修订号。`dist/easysb-linux-<asset>` 是中间产物，绝不单独发布。
-- apt 源就是 GitHub Release 本身，所以一条命令的 `install.sh` 只有一个固定地址（`https://github.com/MinimaxFlora/EasySB/releases/latest/download`）可指向。该目录带有 `install.sh` 本身，所以这一条命令（`curl -fsSL https://github.com/MinimaxFlora/EasySB/releases/latest/download/install.sh | sudo bash`）无需第二个地址。它是一棵扁平（"trivial"）apt 仓库：所有文件同处一层（`Packages` 与签名的 `Release` / `InRelease` / `Release.gpg`、公钥 `easysb-archive-keyring.asc`、`install.sh` 与各架构一个 `.deb`），因此没有 `dists/<suite>` 分层。`make repo` 构建并签名它（`apt-ftparchive`），发布作业把它附到 release。一份包服务所有发行版；`install.sh` 仍会把 `/etc/os-release` 映射到受支持的 Debian / Ubuntu 版本，仅用于拒绝我们不发布的版本。
+- apt 源就是 GitHub Release 本身，所以一条命令的 `install.sh` 只有一个固定地址（`https://github.com/EasySB-Team/EasySB/releases/latest/download`）可指向。该目录带有 `install.sh` 本身，所以这一条命令（`curl -fsSL https://github.com/EasySB-Team/EasySB/releases/latest/download/install.sh | sudo bash`）无需第二个地址。它是一棵扁平（"trivial"）apt 仓库：所有文件同处一层（`Packages` 与签名的 `Release` / `InRelease` / `Release.gpg`、公钥 `easysb-archive-keyring.asc`、`install.sh` 与各架构一个 `.deb`），因此没有 `dists/<suite>` 分层。`make repo` 构建并签名它（`apt-ftparchive`），发布作业把它附到 release。一份包服务所有发行版；`install.sh` 仍会把 `/etc/os-release` 映射到受支持的 Debian / Ubuntu 版本，仅用于拒绝我们不发布的版本。
 
 ## 提交
 

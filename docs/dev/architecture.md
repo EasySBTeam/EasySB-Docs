@@ -16,7 +16,7 @@ EasySB 是仓库根目录下的一个 Go module。运行程序需要的一切都
 ├── install.sh                      # 安装脚本：一条命令配好软件源并安装
 ├── Makefile                        # 构建 / 测试 / 打包入口（见 `make help`）
 ├── packaging/                      # 包生命周期脚本（deb/）与 apt 源构建器（repo/）
-├── go.mod / go.sum                 # module github.com/MinimaxFlora/EasySB，Go 1.27.1
+├── go.mod / go.sum                 # module github.com/EasySB-Team/EasySB，Go 1.27.1
 ├── templates/                      # 可读的 JSONC 样例与订阅模板
 │   ├── anytls/
 │   ├── hysteria2/
@@ -67,7 +67,7 @@ EasySB 是仓库根目录下的一个 Go module。运行程序需要的一切都
 
 软件包携带单元但不会启用或启动它们：全新主机没有节点配置，所以面板在用户配置好之后才启用并启动服务。由于打包的单元位于 `/usr/lib/systemd/system`，而面板把自己的单元写到 `/etc/systemd/system`，面板的那份在其存在期间优先生效，打包的那份作为回退，二者不会争抢同一路径。
 
-apt 需要的固定地址就是 GitHub Release 本身：发布工作流构建 `dist/repo`（一棵扁平 apt 仓库），用发布密钥签名，再把每个文件附到 release，因此一条命令的 `install.sh` 可以写入永不变化的软件源条目（`https://github.com/MinimaxFlora/EasySB/releases/latest/download`）。那一层目录带有 `install.sh`、公钥 `easysb-archive-keyring.asc`、`Packages`/`Packages.gz`、签名的 `Release`/`InRelease`/`Release.gpg` 与各架构的 `.deb`；一份包服务所有发行版，因此没有 `dists/` 分层，也没有 `pool/`。
+apt 需要的固定地址就是 GitHub Release 本身：发布工作流构建 `dist/repo`（一棵扁平 apt 仓库），用发布密钥签名，再把每个文件附到 release，因此一条命令的 `install.sh` 可以写入永不变化的软件源条目（`https://github.com/EasySB-Team/EasySB/releases/latest/download`）。那一层目录带有 `install.sh`、公钥 `easysb-archive-keyring.asc`、`Packages`/`Packages.gz`、签名的 `Release`/`InRelease`/`Release.gpg` 与各架构的 `.deb`；一份包服务所有发行版，因此没有 `dists/` 分层，也没有 `pool/`。
 
 ## 包职责
 

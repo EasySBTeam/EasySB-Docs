@@ -1,6 +1,6 @@
 # EasySB Docs
 
-Documentation site for [EasySB](https://github.com/MinimaxFlora/EasySB), built with
+Documentation site for [EasySB](https://github.com/EasySB-Team/EasySB), built with
 VitePress and the [Teek](https://github.com/Kele-Bingtang/vitepress-theme-teek) theme,
 published at <https://docs.kejizero.xyz>.
 
