@@ -17,7 +17,7 @@ hero:
       link: /guide/intro
     - theme: alt
       text: GitHub
-      link: https://github.com/EasySB-Team/EasySB
+      link: https://github.com/EasySBTeam/EasySB
 
 features:
   - title: 一条命令安装
@@ -37,10 +37,10 @@ features:
 
 ## 一条命令安装
 
-安装脚本核对本机 `/etc/os-release` 是否在受支持的发行版内，写入签名 apt 软件源，再由 apt 安装候选版本。软件源就是 GitHub Release 本身，固定在 `https://github.com/EasySB-Team/EasySB/releases/latest/download`，地址不变，所以一条软件源配置可以一直用下去。
+安装脚本核对本机 `/etc/os-release` 是否在受支持的发行版内，写入签名 apt 软件源，再由 apt 安装候选版本。软件源就是 GitHub Release 本身，固定在 `https://github.com/EasySBTeam/EasySB/releases/latest/download`，地址不变，所以一条软件源配置可以一直用下去。
 
 ```bash
-curl -fsSL https://github.com/EasySB-Team/EasySB/releases/latest/download/install.sh | sudo bash
+curl -fsSL https://github.com/EasySBTeam/EasySB/releases/latest/download/install.sh | sudo bash
 ```
 
 安装完成后以快捷指令启动：

@@ -9,7 +9,7 @@ EasySB is distributed as a Debian / Ubuntu package, with the panel and the core 
 ## One-command install
 
 ```bash
-curl -fsSL https://github.com/EasySB-Team/EasySB/releases/latest/download/install.sh | sudo bash
+curl -fsSL https://github.com/EasySBTeam/EasySB/releases/latest/download/install.sh | sudo bash
 ```
 
 The script does the same shape of work as Docker's `get.docker.com`:
@@ -23,16 +23,16 @@ Script arguments:
 
 | Argument | Description |
 | :--- | :--- |
-| `--repo-url URL` | Source root, default `https://github.com/EasySB-Team/EasySB/releases/latest/download`; also settable through `EASYSB_REPO_URL` |
+| `--repo-url URL` | Source root, default `https://github.com/EasySBTeam/EasySB/releases/latest/download`; also settable through `EASYSB_REPO_URL` |
 | `--lang C\|E` | Script output language, Chinese by default |
 | `-h` / `--help` | Show usage |
 
 ## How the apt source works
 
-The source is the GitHub Release itself, fixed at `https://github.com/EasySB-Team/EasySB/releases/latest/download`, whose address never changes with the version (the workflow keeps only the newest release, so `latest` always resolves), so one source entry keeps working indefinitely. The line the install script writes looks like:
+The source is the GitHub Release itself, fixed at `https://github.com/EasySBTeam/EasySB/releases/latest/download`, whose address never changes with the version (the workflow keeps only the newest release, so `latest` always resolves), so one source entry keeps working indefinitely. The line the install script writes looks like:
 
 ```text
-deb [signed-by=/usr/share/keyrings/easysb-archive-keyring.gpg] https://github.com/EasySB-Team/EasySB/releases/latest/download ./
+deb [signed-by=/usr/share/keyrings/easysb-archive-keyring.gpg] https://github.com/EasySBTeam/EasySB/releases/latest/download ./
 ```
 
 Supported releases:
@@ -48,7 +48,7 @@ Key paths:
 | :--- | :--- |
 | `/usr/share/keyrings/easysb-archive-keyring.gpg` | The dearmored signing key used by `signed-by` |
 | `/etc/apt/sources.list.d/easysb.list` | The apt source line above |
-| `https://github.com/EasySB-Team/EasySB/releases/latest/download/easysb-archive-keyring.asc` | The armored public key attached to the release |
+| `https://github.com/EasySBTeam/EasySB/releases/latest/download/easysb-archive-keyring.asc` | The armored public key attached to the release |
 
 The source is a flat apt repository: every file (`Packages`, the signed `Release` / `InRelease` / `Release.gpg`, the public key, `install.sh` and one `.deb` per architecture) sits in one directory, and the distribution field is `./`. The indexes are signed by the release flow with a GPG key; when the signing key is missing the release fails rather than attaching unsigned indexes. One package serves every supported release: it depends on nothing but `ca-certificates`, so the version string carries no distribution (for example `6.0.0-1`), and upgrading the distribution does not change which one apt installs.
 

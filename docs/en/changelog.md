@@ -4,7 +4,7 @@ title: Changelog
 
 # Changelog
 
-This page records EasySB's major milestones, newest first. The project keeps only the latest Release; for the full history see [GitHub Releases](https://github.com/EasySB-Team/EasySB), and for the finer, entry-by-entry changes see `CHANGELOG.md` at the repository root.
+This page records EasySB's major milestones, newest first. The project keeps only the latest Release; for the full history see [GitHub Releases](https://github.com/EasySBTeam/EasySB), and for the finer, entry-by-entry changes see `CHANGELOG.md` at the repository root.
 
 ## v6.0.0 (current)
 
@@ -13,7 +13,7 @@ This version narrows the release scope to Debian / Ubuntu and moves the release 
 ### Platform and release
 
 - The platform is narrowed to Debian / Ubuntu, the architectures to `amd64` and `arm64`, and the only package left is the `.deb`. `release/TAGS`, `VERSION` and the Makefile's architecture table narrow in step, dropping every rpm, pacman and other-architecture definition.
-- The apt source becomes a flat repository attached to the GitHub Release, fixed at `https://github.com/EasySB-Team/EasySB/releases/latest/download`. `make repo` lays the `.deb` files out in one directory, generates and signs the indexes with `apt-ftparchive`, and puts the public key `easysb-archive-keyring.asc`, `install.sh` and the indexes in the same layer. One package serves every supported Debian / Ubuntu release.
+- The apt source becomes a flat repository attached to the GitHub Release, fixed at `https://github.com/EasySBTeam/EasySB/releases/latest/download`. `make repo` lays the `.deb` files out in one directory, generates and signs the indexes with `apt-ftparchive`, and puts the public key `easysb-archive-keyring.asc`, `install.sh` and the indexes in the same layer. One package serves every supported Debian / Ubuntu release.
 - `install.sh` narrows to a minimal single apt path: check `/etc/os-release` against a supported release, write the signed key and source, then hand over to apt. Only `--repo-url` and `--lang` remain as arguments.
 - The install path moves from `/usr/local/bin` to `/usr/bin`, with the panel and shortcut at `/usr/bin/easysb` and `/usr/bin/sb`.
 - `make pkg-stage` UPX-compresses the binary in the staged tree, so the release assets and the apt source are the same bytes.

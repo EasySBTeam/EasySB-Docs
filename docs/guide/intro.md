@@ -6,7 +6,7 @@ title: 简介
 
 EasySB 是一个面向 Linux VPS 的 sing-box 五合一部署面板。它把协议部署、证书申请、账号与流量管理、订阅生成和主机测量收进一套深色全屏菜单，编译为单一静态二进制，以快捷指令 `sb` 呼出。
 
-- 项目地址：https://github.com/EasySB-Team/EasySB
+- 项目地址：https://github.com/EasySBTeam/EasySB
 - 内核来源：https://github.com/SagerNet/sing-box
 - 完整更新日志：[更新日志](/changelog)
 - 常见问题：[常见问题](/faq)
@@ -65,7 +65,7 @@ easysb core run -c /etc/sing-box/config.json
 ├── install.sh                    # 一键安装脚本（配好签名软件源并交给 apt）
 ├── Makefile                      # 构建、测试、打包入口（见 make help）
 ├── packaging/                    # 软件包生命周期脚本（deb/）与 apt 源构建（repo/）
-├── go.mod / go.sum               # module github.com/EasySB-Team/EasySB，Go 1.27.1
+├── go.mod / go.sum               # module github.com/EasySBTeam/EasySB，Go 1.27.1
 ├── templates/                    # 可读的 JSONC 协议样例与订阅模板
 │   ├── anytls/
 │   ├── hysteria2/

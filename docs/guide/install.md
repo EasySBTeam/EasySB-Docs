@@ -9,7 +9,7 @@ EasySB 以 Debian / Ubuntu 软件包分发，面板与内核在同一个 `.deb` 
 ## 一键安装
 
 ```bash
-curl -fsSL https://github.com/EasySB-Team/EasySB/releases/latest/download/install.sh | sudo bash
+curl -fsSL https://github.com/EasySBTeam/EasySB/releases/latest/download/install.sh | sudo bash
 ```
 
 脚本做的事情与 Docker 官方的 `get.docker.com` 同形：
@@ -23,16 +23,16 @@ curl -fsSL https://github.com/EasySB-Team/EasySB/releases/latest/download/instal
 
 | 参数 | 说明 |
 | :--- | :--- |
-| `--repo-url URL` | 软件源根地址，默认 `https://github.com/EasySB-Team/EasySB/releases/latest/download`，也可用环境变量 `EASYSB_REPO_URL` 指定 |
+| `--repo-url URL` | 软件源根地址，默认 `https://github.com/EasySBTeam/EasySB/releases/latest/download`，也可用环境变量 `EASYSB_REPO_URL` 指定 |
 | `--lang C\|E` | 脚本输出语言，默认中文 |
 | `-h` / `--help` | 显示用法 |
 
 ## 软件源机制
 
-软件源就是 GitHub Release 本身，固定在 `https://github.com/EasySB-Team/EasySB/releases/latest/download`，地址不随版本变化（工作流只保留最新 release，`latest` 因此始终可用），所以一条源配置可以一直用下去。安装脚本写出的那一行形如：
+软件源就是 GitHub Release 本身，固定在 `https://github.com/EasySBTeam/EasySB/releases/latest/download`，地址不随版本变化（工作流只保留最新 release，`latest` 因此始终可用），所以一条源配置可以一直用下去。安装脚本写出的那一行形如：
 
 ```text
-deb [signed-by=/usr/share/keyrings/easysb-archive-keyring.gpg] https://github.com/EasySB-Team/EasySB/releases/latest/download ./
+deb [signed-by=/usr/share/keyrings/easysb-archive-keyring.gpg] https://github.com/EasySBTeam/EasySB/releases/latest/download ./
 ```
 
 受支持的发行版：
@@ -48,7 +48,7 @@ deb [signed-by=/usr/share/keyrings/easysb-archive-keyring.gpg] https://github.co
 | :--- | :--- |
 | `/usr/share/keyrings/easysb-archive-keyring.gpg` | 解甲后的签名公钥，供 `signed-by` 使用 |
 | `/etc/apt/sources.list.d/easysb.list` | 上面那一行 apt 源 |
-| `https://github.com/EasySB-Team/EasySB/releases/latest/download/easysb-archive-keyring.asc` | 随 release 附上的 armored 公钥 |
+| `https://github.com/EasySBTeam/EasySB/releases/latest/download/easysb-archive-keyring.asc` | 随 release 附上的 armored 公钥 |
 
 软件源是一棵扁平 apt 仓库：所有文件（`Packages`、签名的 `Release` / `InRelease` / `Release.gpg`、公钥、`install.sh` 与各架构的 `.deb`）同处一层，发行版字段为 `./`。索引由发布流程用一把 GPG 密钥签名；缺少签名密钥时发布直接失败，不会附上未签名的索引。一份包服务全部受支持的发行版：它除 `ca-certificates` 外不依赖任何东西，版本串里因此不带发行版（形如 `6.0.0-1`），升级发行版也不会改变 apt 装的是哪一份。
 

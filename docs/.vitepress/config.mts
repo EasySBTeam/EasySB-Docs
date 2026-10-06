@@ -149,7 +149,7 @@ export default defineConfig({
   },
   themeConfig: {
     logo: "/logo.svg",
-    socialLinks: [{ icon: "github", link: "https://github.com/EasySB-Team/EasySB" }],
+    socialLinks: [{ icon: "github", link: "https://github.com/EasySBTeam/EasySB" }],
     search: {
       provider: "local",
       options: {
@@ -194,7 +194,7 @@ export default defineConfig({
     sidebarMenuLabel: "目录",
     returnToTopLabel: "回到顶部",
     editLink: {
-      pattern: "https://github.com/EasySB-Team/EasySB-Docs/edit/main/docs/:path",
+      pattern: "https://github.com/EasySBTeam/EasySB-Docs/edit/main/docs/:path",
       text: "在 GitHub 上编辑此页",
     },
     footer: {
@@ -223,14 +223,14 @@ export default defineConfig({
               { text: "更新日志", link: "/changelog" },
               {
                 text: "安装包下载",
-                link: "https://github.com/EasySB-Team/EasySB/releases",
+                link: "https://github.com/EasySBTeam/EasySB/releases",
               },
             ],
           },
         ],
         sidebar: zhSidebar,
         editLink: {
-          pattern: "https://github.com/EasySB-Team/EasySB-Docs/edit/main/docs/:path",
+          pattern: "https://github.com/EasySBTeam/EasySB-Docs/edit/main/docs/:path",
           text: "在 GitHub 上编辑此页",
         },
       },
@@ -268,7 +268,7 @@ export default defineConfig({
               { text: "Changelog", link: "/en/changelog" },
               {
                 text: "Download packages",
-                link: "https://github.com/EasySB-Team/EasySB/releases",
+                link: "https://github.com/EasySBTeam/EasySB/releases",
               },
             ],
           },
@@ -281,7 +281,7 @@ export default defineConfig({
         sidebarMenuLabel: "Menu",
         returnToTopLabel: "Return to top",
         editLink: {
-          pattern: "https://github.com/EasySB-Team/EasySB-Docs/edit/main/docs/:path",
+          pattern: "https://github.com/EasySBTeam/EasySB-Docs/edit/main/docs/:path",
           text: "Edit this page on GitHub",
         },
         footer: {
