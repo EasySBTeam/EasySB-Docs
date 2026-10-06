@@ -23,7 +23,7 @@ title: 约定
 - 程序版本独立于 sing-box 内核版本。
 - 发布标签是 `v<VERSION>`，发布名也是同一个字符串。工作流、`internal/update` 与发布说明都从版本推导标签；不要创建第二套命名方案。只保留最新一次发布：工作流在每次发布后清理更旧的 release 与其标签。
 - 发布资产是每个架构一个 `.deb`，即 `easysb_<version>-1_<arch>.deb`，其中 `<arch>` 用 Debian 拼写（`amd64`、`arm64`），`-1` 是软件包自身的修订号。`dist/easysb-linux-<asset>` 是中间产物，绝不单独发布。
-- apt 源由 GitHub Pages 发布，而不放在第二个 release tag 上，所以一条命令的 `install.sh` 只有一个固定地址（`https://sb.kejizero.xyz`）可指向。站点根带有 `install.sh` 本身，所以这一条命令（`curl -fsSL https://sb.kejizero.xyz/install.sh | sudo bash`）无需第二个地址。整棵树是标准 apt 树：一份共用的 `pool/main/e/easysb/`，每个套件一个 `dists/<suite>/main/binary-<arch>/`，含 `Packages` 与签名的 `Release` / `InRelease`；公钥是根目录的 `easysb-archive-keyring.asc`。`make repo` 构建并签名它（`apt-ftparchive`），工作流用 `actions/deploy-pages` 部署。套件是 Debian 与 Ubuntu 当前版本 `bookworm`、`trixie` 与 `noble`，每一个都提供两种架构；`install.sh` 与 Makefile 的 `APT_SUITES` 一起移动。
+- apt 源就是 GitHub Release 本身，所以一条命令的 `install.sh` 只有一个固定地址（`https://github.com/MinimaxFlora/EasySB/releases/latest/download`）可指向。该目录带有 `install.sh` 本身，所以这一条命令（`curl -fsSL https://github.com/MinimaxFlora/EasySB/releases/latest/download/install.sh | sudo bash`）无需第二个地址。它是一棵扁平（"trivial"）apt 仓库：所有文件同处一层（`Packages` 与签名的 `Release` / `InRelease` / `Release.gpg`、公钥 `easysb-archive-keyring.asc`、`install.sh` 与各架构一个 `.deb`），因此没有 `dists/<suite>` 分层。`make repo` 构建并签名它（`apt-ftparchive`），发布作业把它附到 release。一份包服务所有发行版；`install.sh` 仍会把 `/etc/os-release` 映射到受支持的 Debian / Ubuntu 版本，仅用于拒绝我们不发布的版本。
 
 ## 提交
 
@@ -48,8 +48,8 @@ title: 约定
 
 - `.github/workflows/easysb-go-release.yml` 交叉编译 `linux/amd64` 与 `linux/arm64`（BBR 内核覆盖的两个架构），在被监视路径发生改动并推送到 `master` 时运行，并发布一个以 `v<VERSION>` 标记和命名的 release，每个架构携带一个 `.deb`。随后发布作业清理更旧的 release 与其标签，所以 Release 页面只显示当前版本。
 - `.deb`（`make deb`）由 fpm 从一棵暂存树构建；架构名位于 Makefile 的 `DEBARCH_MAP`，以资产名为键，一张表同时服务打包与布局。`pkg-stage` 在进入暂存树时用 UPX 压缩二进制，所以发布资产与 apt 源携带相同的压缩后字节。打包的单元来自 `easysb --print-unit`；不要在 `packaging/` 下手写单元。
-- `make repo`（`packaging/repo/index.sh`，经由 `apt-ftparchive`）把 `.deb` 摆成 apt 树并签名。工作流用 `actions/deploy-pages` 把 `dist/repo` 部署到 GitHub Pages，附加 `.nojekyll` 与固定 `sb.kejizero.xyz` 的 `CNAME`；`packaging/repo/` 是决定布局的唯一地方。
-- apt 索引由一把口令保护的密钥签名：secrets 是 `GPG_PRIVATE_KEY` 与 `GPG_PASSPHRASE`，签名从 0600 文件读取口令，因此它不会出现在进程列表里。pages 作业要求 `GPG_PRIVATE_KEY`，缺失即失败，因为未签名的源是 `install.sh` 绝不该让一台机器指向的东西。
+- `make repo`（`packaging/repo/index.sh`，经由 `apt-ftparchive`）把 `.deb` 摆成扁平 apt 仓库并签名。发布作业把 `dist/repo/*` 附到 release，release 即软件源根；`packaging/repo/` 是决定布局的唯一地方。
+- apt 索引由一把口令保护的密钥签名：secrets 是 `GPG_PRIVATE_KEY` 与 `GPG_PASSPHRASE`，签名从 0600 文件读取口令，因此它不会出现在进程列表里。发布作业要求 `GPG_PRIVATE_KEY`，缺失即失败，因为未签名的源是 `install.sh` 绝不该让一台机器指向的东西。
 - 强制推送之后，用一次普通推送触发工作流；强制推送不能可靠地产生 Actions 的 `push` 事件。
 
 ## 文档卫生

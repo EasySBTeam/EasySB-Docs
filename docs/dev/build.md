@@ -21,7 +21,7 @@ make dist
 # 用 fpm 把 dist/ 的二进制打成 .deb
 make deb
 
-# 把 .deb 摆成签名的 apt 树（dist/repo）
+# 把 .deb 摆成签名的扁平 apt 仓库（dist/repo）
 make repo
 
 # 渲染一帧桌面版式并退出，无需 TTY

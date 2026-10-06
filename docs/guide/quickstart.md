@@ -8,20 +8,20 @@ title: 快速开始
 
 ## 第一步：安装
 
-安装脚本与 Docker 官方的 `get.docker.com` 是同一个形状：读取本机的 `/etc/os-release`，映射到已发布的三个套件之一，装好签名公钥与 apt 软件源，再交给 apt 安装。
+安装脚本与 Docker 官方的 `get.docker.com` 是同一个形状：读取本机的 `/etc/os-release`，核对是否在受支持的发行版内，装好签名公钥与 apt 软件源，再交给 apt 安装。
 
 ```bash
-curl -fsSL https://sb.kejizero.xyz/install.sh | sudo bash
+curl -fsSL https://github.com/MinimaxFlora/EasySB/releases/latest/download/install.sh | sudo bash
 ```
 
 脚本还接受两个参数：
 
 ```bash
 # 指向镜像站
-curl -fsSL https://sb.kejizero.xyz/install.sh | sudo bash -s -- --repo-url https://mirror.example.com
+curl -fsSL https://github.com/MinimaxFlora/EasySB/releases/latest/download/install.sh | sudo bash -s -- --repo-url https://mirror.example.com
 
 # 切换为英文输出
-curl -fsSL https://sb.kejizero.xyz/install.sh | sudo bash -s -- --lang E
+curl -fsSL https://github.com/MinimaxFlora/EasySB/releases/latest/download/install.sh | sudo bash -s -- --lang E
 ```
 
 ::: tip

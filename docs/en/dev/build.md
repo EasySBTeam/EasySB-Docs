@@ -21,7 +21,7 @@ make dist
 # Package the dist/ binaries into .deb files with fpm
 make deb
 
-# Lay the .deb files out as a signed apt tree (dist/repo)
+# Lay the .deb files out as a signed flat apt repository (dist/repo)
 make repo
 
 # Render one desktop frame and exit, no TTY needed

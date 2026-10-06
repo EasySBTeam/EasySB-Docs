@@ -12,11 +12,10 @@ title: 踩坑
 - **改写可能让旧 release 失联。** 改写某个 release tag 指向的提交，会让旧 tag/release 不可达（开始返回 404）。按当前标签方案重新发布。
 - **更旧的运行会覆盖更新的资产。** 工作流使用带 `cancel-in-progress` 的 `concurrency` 组，使过期的构建无法覆盖更新的构建。
 - **只保留最新 release。** `action-gh-release` 会覆盖同名资产但留下其他资产，所以发布作业先清理自己的资产，再删除其他每个 release 及其标签（`gh release delete --cleanup-tag`）。Release 页面应当只显示一个版本；残留的旧 release 意味着清理步骤没有运行。
-- **Pages 需要 `.nojekyll` 与 `CNAME`。** GitHub Pages 默认运行 Jekyll，可能跳过 apt 树中的路径；没有 `CNAME` 文件的项目站点会挂在 `github.io` 下，而不是 `sb.kejizero.xyz`——而 `install.sh` 与软件源都固定指向后者。pages 作业在上传前把两者写进 `dist/repo`。
-- **`Release` 文件必须在它自己的树之外生成。** `apt-ftparchive release .` 会校验套件目录下的每个文件，所以已经存在的 `Release` 会被列进它自己的校验和里。`index.sh` 先写临时文件，之后再移入。
-- **pool 是共用的，所以 `Filename` 相对于站点根。** 两种架构与每个套件读取同一个 `pool/main/e/easysb/`；`Packages` 因此列出 `pool/main/e/easysb/easysb_6.0.0-1_amd64.deb` 这样的路径，而不是套件下的路径。`index.sh` 从一个镜像 pool 路径的临时树生成它，使字段保持站点根相对。
-- **apt 源必须签名。** 当 `GPG_PRIVATE_KEY` 缺失时 pages 作业失败，而不是发布未签名索引：`install.sh` 写入 `signed-by=` 条目，apt 会拒绝索引未携带该密钥签名的源。
-- **套件列表有两个家，且绝不能漂移。** Makefile 的 `APT_SUITES` 决定存在哪些 `dists/<suite>` 目录；`install.sh` 把 `/etc/os-release` 映射到同一批名字。新增发行版意味着两处都要改，否则机器会拿到一个未发布的源。
+- **`Release` 文件必须在它自己的树之外生成。** `apt-ftparchive release .` 会校验该目录下的每个文件，所以已经存在的 `Release` 会被列进它自己的校验和里。`index.sh` 先把 `Release` 写到 `dist/repo` 之外的临时文件，之后再移入。
+- **仓库是扁平的，所以 `Filename` 必须是裸文件名。** 软件源是 GitHub Release，而 release 资产没有目录结构，因此 `Packages` 列出 `Filename: easysb_6.0.0-1_amd64.deb`，不带 `./`、也不带 `pool/` 前缀。`index.sh` 剥掉 `apt-ftparchive packages .` 写出的 `./`，让 apt 把下载地址拼成 `<release 根>/<文件名>`。
+- **apt 源必须签名。** 当 `GPG_PRIVATE_KEY` 缺失时发布作业失败，而不是附上未签名索引：`install.sh` 写入 `signed-by=` 条目，apt 会拒绝索引未携带该密钥签名的源。
+- **机器映射到受支持的发行版，但一份包服务它们全部。** 已经没有套件目录，所以 `install.sh` 的发行版核对只用于拒绝我们不发布的版本，不再选择索引。
 
 ## 版本与身份
 

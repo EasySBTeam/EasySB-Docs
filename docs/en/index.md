@@ -21,7 +21,7 @@ hero:
 
 features:
   - title: Install with one command
-    details: "An install script shaped like get.docker.com: it maps Debian / Ubuntu to a published suite, writes a signed apt source, then hands over to apt, so later upgrades are just apt upgrade."
+    details: "An install script shaped like get.docker.com: it checks the Debian / Ubuntu release, writes a signed apt source, then hands over to apt, so later upgrades are just apt upgrade."
   - title: Five protocols out of the box
     details: "AnyTLS, Hysteria2, TUIC v5, VLESS + Vision + Reality and VMess + WebSocket + TLS, with ports arranged one by one and per-user, per-protocol credentials."
   - title: The core is compiled into the panel
@@ -37,10 +37,10 @@ features:
 
 ## Install with one command
 
-The install script maps the machine's `/etc/os-release` to one of the three published suites (`bookworm`, `trixie`, `noble`), writes a signed apt source, and lets apt install the candidate version. The source is published by GitHub Pages at a fixed `https://sb.kejizero.xyz`, so one source entry keeps working indefinitely.
+The install script checks the machine's `/etc/os-release` against the releases EasySB ships for, writes a signed apt source, and lets apt install the candidate version. The source is the GitHub Release itself, fixed at `https://github.com/MinimaxFlora/EasySB/releases/latest/download`, so one source entry keeps working indefinitely.
 
 ```bash
-curl -fsSL https://sb.kejizero.xyz/install.sh | sudo bash
+curl -fsSL https://github.com/MinimaxFlora/EasySB/releases/latest/download/install.sh | sudo bash
 ```
 
 After install, open the panel with the shortcut:

@@ -8,13 +8,13 @@ title: 更新日志
 
 ## v6.0.0（当前）
 
-本版把发布范围收敛为 Debian / Ubuntu，发布通道整体改由 GitHub Release 与 GitHub Pages 承载。
+本版把发布范围收敛为 Debian / Ubuntu，发布通道整体改由 GitHub Release 承载。
 
 ### 平台与发布
 
 - 平台收敛为 Debian / Ubuntu，架构收敛为 `amd64` 与 `arm64`，只保留 `.deb` 一种包。`release/TAGS`、`VERSION` 与 `Makefile` 的架构表同步收敛，删除 rpm、pacman 以及其它架构的全部定义。
-- 软件源改由 GitHub Pages 发布在 `https://sb.kejizero.xyz`。`make repo` 把 `.deb` 摊成标准 apt 树（一份共享 `pool/`，每个套件一份 `dists/<suite>/`），用 `apt-ftparchive` 生成索引并签名，公钥发布为源根的 `easysb-archive-keyring.asc`。三个套件 `bookworm`、`trixie`、`noble` 由 Makefile 的 `APT_SUITES` 单点定义。
-- `install.sh` 收敛为极简 apt 单路径：识别 `/etc/os-release`，装好签名公钥与源，再交给 apt。参数只保留 `--repo-url` 与 `--lang`。
+- 软件源改为附在 GitHub Release 上的扁平 apt 仓库，地址固定为 `https://github.com/MinimaxFlora/EasySB/releases/latest/download`。`make repo` 把 `.deb` 摆进一层目录，用 `apt-ftparchive` 生成索引并签名，公钥 `easysb-archive-keyring.asc`、`install.sh` 与索引同处一层。一份包服务所有受支持的 Debian / Ubuntu 发行版。
+- `install.sh` 收敛为极简 apt 单路径：核对 `/etc/os-release` 是否为受支持的发行版，装好签名公钥与源，再交给 apt。参数只保留 `--repo-url` 与 `--lang`。
 - 安装路径由 `/usr/local/bin` 改为 `/usr/bin`，面板与快捷指令分别是 `/usr/bin/easysb` 与 `/usr/bin/sb`。
 - `make pkg-stage` 在暂存树里对二进制做 UPX 压缩，release 资产与软件源因此是同一批字节。
 - 发布只保留最新一版：工作流在 publish 后裁掉上一个 release 及其 tag。
@@ -25,7 +25,7 @@ title: 更新日志
 
 ### 清理与加固
 
-- 删除发布服务器与服务器置备链路，源由 GitHub Pages 直接发布。
+- 删除发布服务器与服务器置备链路，源由 GitHub Release 直接承载。
 - 删除已无用的 sing-box 重编译脚本与工作流，内核已编译进面板。
 - CI 权限收窄并固定 Actions 版本；pull request 走同一套门禁但不发布。
 - 一批并发与安全修复，包括账号文件的跨进程锁、订阅服务 TLS 判定与打印地址一致、下载原子落盘与临时目录私有化。

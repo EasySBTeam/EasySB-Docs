@@ -61,13 +61,13 @@ EasySB 是仓库根目录下的一个 Go module。运行程序需要的一切都
 | `sing-box.service` | `easysb --print-unit node --unit-exec /usr/bin/easysb`，与面板运行时写入的是同一个 `internal/service.UnitBody` |
 | `easysb.service` | `easysb --print-unit sub --unit-exec /usr/bin/easysb`，与 `internal/subd.UnitBody` 相同 |
 | 包架构 | `Makefile` 中的 `DEBARCH_MAP`，以资产名（`amd64`、`arm64`）为键，一张表同时驱动打包与布局 |
-| apt 源 | `make repo` 运行 `packaging/repo/index.sh`：`.deb` 放入共用的 `pool/main/e/easysb/`，`APT_SUITES`（`bookworm`、`trixie`、`noble`）里的每个套件得到 `dists/<suite>/main/binary-<arch>/Packages` 以及签名的 `Release` / `InRelease`。公钥与 `install.sh` 位于站点根 |
+| apt 源 | `make repo` 运行 `packaging/repo/index.sh`：输出一层扁平目录，含 `Packages` / `Packages.gz`、签名的 `Release` / `InRelease` / `Release.gpg`、公钥 `easysb-archive-keyring.asc`、`install.sh` 与各架构的 `.deb`。发布作业把这些文件作为资产附到 release，release 即软件源根 |
 
 `dist/easysb-linux-<asset>` 只是中间产物：`pkg-stage` 把它拷入暂存树，`deb-asset` 在那里构建 `.deb`，发布与软件源都不会单独发布裸二进制。
 
 软件包携带单元但不会启用或启动它们：全新主机没有节点配置，所以面板在用户配置好之后才启用并启动服务。由于打包的单元位于 `/usr/lib/systemd/system`，而面板把自己的单元写到 `/etc/systemd/system`，面板的那份在其存在期间优先生效，打包的那份作为回退，二者不会争抢同一路径。
 
-apt 需要的固定地址放在 GitHub Pages（`sb.kejizero.xyz`），而不是第二个 release tag：发布工作流构建 `dist/repo`，用发布密钥签名，再用 `actions/deploy-pages` 部署，因此一条命令的 `install.sh` 可以写入永不变化的软件源条目。站点根带有 `install.sh`、公钥 `easysb-archive-keyring.asc`、共用的 `pool/` 与按套件划分的 `dists/`；`CNAME` 文件固定自定义域名，`.nojekyll` 阻止 Pages 对整棵树运行 Jekyll。
+apt 需要的固定地址就是 GitHub Release 本身：发布工作流构建 `dist/repo`（一棵扁平 apt 仓库），用发布密钥签名，再把每个文件附到 release，因此一条命令的 `install.sh` 可以写入永不变化的软件源条目（`https://github.com/MinimaxFlora/EasySB/releases/latest/download`）。那一层目录带有 `install.sh`、公钥 `easysb-archive-keyring.asc`、`Packages`/`Packages.gz`、签名的 `Release`/`InRelease`/`Release.gpg` 与各架构的 `.deb`；一份包服务所有发行版，因此没有 `dists/` 分层，也没有 `pool/`。
 
 ## 包职责
 

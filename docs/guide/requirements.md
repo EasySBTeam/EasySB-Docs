@@ -11,11 +11,11 @@ EasySB 面向运行 Linux 的 VPS 或独立服务器。安装前请确认下面�
 | 项目 | 要求 |
 | :--- | :--- |
 | 发行版 | Debian 12（bookworm）、Debian 13（trixie）、Ubuntu 24.04（noble） |
-| 更宽的上界 | 文档将支持范围表述为 Debian 12+ 与 Ubuntu 24.04+，前提是仍映射到上面三个已发布套件之一 |
+| 更宽的上界 | 文档将支持范围表述为 Debian 12+ 与 Ubuntu 24.04+，前提是仍映射到上面这些受支持的发行版 |
 | 初始化系统 | systemd |
 | 权限 | root（安装脚本会在非 root 时尝试使用 `sudo`，但没有 `sudo` 会直接停止） |
 
-apt 软件源覆盖 Debian 12/13 与 Ubuntu 24.04，分别对应 `bookworm`、`trixie`、`noble` 三个套件。安装脚本把本机 `/etc/os-release` 映射到其中一个；映射不到的发行版会被拒绝，而不是给出一个不存在的源。
+apt 软件源覆盖 Debian 12/13 与 Ubuntu 24.04。安装脚本核对本机 `/etc/os-release` 是否受支持；不支持的发行版会被拒绝，而不是给出一个不存在的源。
 
 ::: warning
 EasySB 只支持 systemd。OpenRC 等其它初始化系统不在当前支持范围内。

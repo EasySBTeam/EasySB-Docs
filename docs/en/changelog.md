@@ -8,13 +8,13 @@ This page records EasySB's major milestones, newest first. The project keeps onl
 
 ## v6.0.0 (current)
 
-This version narrows the release scope to Debian / Ubuntu and moves the release channel entirely onto GitHub Releases and GitHub Pages.
+This version narrows the release scope to Debian / Ubuntu and moves the release channel entirely onto GitHub Releases.
 
 ### Platform and release
 
 - The platform is narrowed to Debian / Ubuntu, the architectures to `amd64` and `arm64`, and the only package left is the `.deb`. `release/TAGS`, `VERSION` and the Makefile's architecture table narrow in step, dropping every rpm, pacman and other-architecture definition.
-- The apt source moves to GitHub Pages at `https://sb.kejizero.xyz`. `make repo` lays the `.deb` files out as a standard apt tree (a shared `pool/`, one `dists/<suite>/` per suite), generates and signs the indexes with `apt-ftparchive`, and publishes the public key as the source root's `easysb-archive-keyring.asc`. The three suites `bookworm`, `trixie` and `noble` are defined in one place, the Makefile's `APT_SUITES`.
-- `install.sh` narrows to a minimal single apt path: recognize `/etc/os-release`, write the signed key and source, then hand over to apt. Only `--repo-url` and `--lang` remain as arguments.
+- The apt source becomes a flat repository attached to the GitHub Release, fixed at `https://github.com/MinimaxFlora/EasySB/releases/latest/download`. `make repo` lays the `.deb` files out in one directory, generates and signs the indexes with `apt-ftparchive`, and puts the public key `easysb-archive-keyring.asc`, `install.sh` and the indexes in the same layer. One package serves every supported Debian / Ubuntu release.
+- `install.sh` narrows to a minimal single apt path: check `/etc/os-release` against a supported release, write the signed key and source, then hand over to apt. Only `--repo-url` and `--lang` remain as arguments.
 - The install path moves from `/usr/local/bin` to `/usr/bin`, with the panel and shortcut at `/usr/bin/easysb` and `/usr/bin/sb`.
 - `make pkg-stage` UPX-compresses the binary in the staged tree, so the release assets and the apt source are the same bytes.
 - Only the latest release is kept: the workflow trims the previous release and its tag after publishing.
@@ -25,7 +25,7 @@ This version narrows the release scope to Debian / Ubuntu and moves the release 
 
 ### Cleanup and hardening
 
-- Remove the release server and server-provisioning chain; the source is published directly by GitHub Pages.
+- Remove the release server and server-provisioning chain; the source is served directly by the GitHub Release.
 - Remove the now-unused sing-box rebuild script and workflow; the core is compiled into the panel.
 - Narrow CI permissions and pin Actions versions; pull requests go through the same gate but do not publish.
 - A batch of concurrency and security fixes, including a cross-process lock on the account file, a subscription service TLS decision consistent with the printed URL, atomic download writes and private temporary directories.

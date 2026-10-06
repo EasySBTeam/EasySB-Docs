@@ -9,12 +9,12 @@ EasySB 以 Debian / Ubuntu 软件包分发，面板与内核在同一个 `.deb` 
 ## 一键安装
 
 ```bash
-curl -fsSL https://sb.kejizero.xyz/install.sh | sudo bash
+curl -fsSL https://github.com/MinimaxFlora/EasySB/releases/latest/download/install.sh | sudo bash
 ```
 
 脚本做的事情与 Docker 官方的 `get.docker.com` 同形：
 
-1. 读取 `/etc/os-release`，把本机映射到 `bookworm`、`trixie`、`noble` 三个套件之一。
+1. 读取 `/etc/os-release`，核对本机是否在受支持的 Debian / Ubuntu 发行版内（不支持则直接拒绝）。
 2. 从软件源根取回 armored 公钥，解甲后落到 `/usr/share/keyrings/easysb-archive-keyring.gpg`。
 3. 把一行 `deb` 源写进 `/etc/apt/sources.list.d/easysb.list`。
 4. 执行 `apt-get update` 并 `apt-get install easysb`。
@@ -23,25 +23,24 @@ curl -fsSL https://sb.kejizero.xyz/install.sh | sudo bash
 
 | 参数 | 说明 |
 | :--- | :--- |
-| `--repo-url URL` | 软件源根地址，默认 `https://sb.kejizero.xyz`，也可用环境变量 `EASYSB_REPO_URL` 指定 |
+| `--repo-url URL` | 软件源根地址，默认 `https://github.com/MinimaxFlora/EasySB/releases/latest/download`，也可用环境变量 `EASYSB_REPO_URL` 指定 |
 | `--lang C\|E` | 脚本输出语言，默认中文 |
 | `-h` / `--help` | 显示用法 |
 
 ## 软件源机制
 
-软件源由 GitHub Pages 固定发布在 `https://sb.kejizero.xyz`，地址不随版本变化，因此一条源配置可以一直用下去。安装脚本写出的那一行形如：
+软件源就是 GitHub Release 本身，固定在 `https://github.com/MinimaxFlora/EasySB/releases/latest/download`，地址不随版本变化（工作流只保留最新 release，`latest` 因此始终可用），所以一条源配置可以一直用下去。安装脚本写出的那一行形如：
 
 ```text
-deb [signed-by=/usr/share/keyrings/easysb-archive-keyring.gpg] https://sb.kejizero.xyz <suite> main
+deb [signed-by=/usr/share/keyrings/easysb-archive-keyring.gpg] https://github.com/MinimaxFlora/EasySB/releases/latest/download ./
 ```
 
-其中 `<suite>` 是 `bookworm`、`trixie`、`noble` 之一：
+受支持的发行版：
 
-| 套件 | 对应系统 |
+| 发行版 | 版本 |
 | :--- | :--- |
-| `bookworm` | Debian 12 |
-| `trixie` | Debian 13 |
-| `noble` | Ubuntu 24.04 |
+| Debian | 12、13 |
+| Ubuntu | 24.04 |
 
 关键路径：
 
@@ -49,9 +48,9 @@ deb [signed-by=/usr/share/keyrings/easysb-archive-keyring.gpg] https://sb.kejize
 | :--- | :--- |
 | `/usr/share/keyrings/easysb-archive-keyring.gpg` | 解甲后的签名公钥，供 `signed-by` 使用 |
 | `/etc/apt/sources.list.d/easysb.list` | 上面那一行 apt 源 |
-| `https://sb.kejizero.xyz/easysb-archive-keyring.asc` | 源根发布的 armored 公钥 |
+| `https://github.com/MinimaxFlora/EasySB/releases/latest/download/easysb-archive-keyring.asc` | 随 release 附上的 armored 公钥 |
 
-软件源是一棵标准 apt 树：一份共享的 `pool/main/e/easysb/`，以及每个套件自己的 `dists/<suite>/main/binary-<arch>/`。索引由发布流程用一把 GPG 密钥签名（`InRelease` 与 `Release.gpg`）；缺少签名密钥时发布直接失败，不会发出未签名的索引。一份包服务全部三个套件：它除 `ca-certificates` 外不依赖任何东西，版本串里因此不带发行版（形如 `6.0.0-1`），升级发行版也不会改变 apt 装的是哪一份。
+软件源是一棵扁平 apt 仓库：所有文件（`Packages`、签名的 `Release` / `InRelease` / `Release.gpg`、公钥、`install.sh` 与各架构的 `.deb`）同处一层，发行版字段为 `./`。索引由发布流程用一把 GPG 密钥签名；缺少签名密钥时发布直接失败，不会附上未签名的索引。一份包服务全部受支持的发行版：它除 `ca-certificates` 外不依赖任何东西，版本串里因此不带发行版（形如 `6.0.0-1`），升级发行版也不会改变 apt 装的是哪一份。
 
 配置好源之后即可用 apt 安装与升级：
 

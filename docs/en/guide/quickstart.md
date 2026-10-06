@@ -8,20 +8,20 @@ This path turns a fresh Debian or Ubuntu host into a connectable node: install w
 
 ## Step 1: Install
 
-The install script is shaped like Docker's `get.docker.com`: it reads the machine's `/etc/os-release`, maps it to one of the three published suites, writes the signed key and apt source, and hands over to apt.
+The install script is shaped like Docker's `get.docker.com`: it reads the machine's `/etc/os-release`, checks that it is a supported release, writes the signed key and apt source, and hands over to apt.
 
 ```bash
-curl -fsSL https://sb.kejizero.xyz/install.sh | sudo bash
+curl -fsSL https://github.com/MinimaxFlora/EasySB/releases/latest/download/install.sh | sudo bash
 ```
 
 The script also accepts two arguments:
 
 ```bash
 # Point at a mirror
-curl -fsSL https://sb.kejizero.xyz/install.sh | sudo bash -s -- --repo-url https://mirror.example.com
+curl -fsSL https://github.com/MinimaxFlora/EasySB/releases/latest/download/install.sh | sudo bash -s -- --repo-url https://mirror.example.com
 
 # Switch the output to English
-curl -fsSL https://sb.kejizero.xyz/install.sh | sudo bash -s -- --lang E
+curl -fsSL https://github.com/MinimaxFlora/EasySB/releases/latest/download/install.sh | sudo bash -s -- --lang E
 ```
 
 ::: tip

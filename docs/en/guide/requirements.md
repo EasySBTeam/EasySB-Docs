@@ -11,11 +11,11 @@ EasySB targets a Linux VPS or dedicated server. Confirm the system, permission, 
 | Item | Requirement |
 | :--- | :--- |
 | Distribution | Debian 12 (bookworm), Debian 13 (trixie), Ubuntu 24.04 (noble) |
-| Wider upper bound | The docs state the supported range as Debian 12+ and Ubuntu 24.04+, provided the machine still maps to one of the three published suites |
+| Wider upper bound | The docs state the supported range as Debian 12+ and Ubuntu 24.04+, provided the machine is still a supported release |
 | Init system | systemd |
 | Permission | root (the install script tries `sudo` when not root, and stops outright when `sudo` is missing) |
 
-The apt source covers Debian 12/13 and Ubuntu 24.04, corresponding to the `bookworm`, `trixie` and `noble` suites. The install script maps the machine's `/etc/os-release` to one of them; a distribution with no mapping is rejected rather than given a source that does not exist.
+The apt source covers Debian 12/13 and Ubuntu 24.04. The install script checks the machine's `/etc/os-release` against the supported releases; an unsupported distribution is rejected rather than given a source that does not exist.
 
 ::: warning
 EasySB supports systemd only. Other init systems such as OpenRC are out of scope.

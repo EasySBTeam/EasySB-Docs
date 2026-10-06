@@ -61,13 +61,13 @@ One release is tagged and named `v<VERSION>` and carries one `.deb` per architec
 | `sing-box.service` | `easysb --print-unit node --unit-exec /usr/bin/easysb`, the same `internal/service.UnitBody` the panel writes at runtime |
 | `easysb.service` | `easysb --print-unit sub --unit-exec /usr/bin/easysb`, the same as `internal/subd.UnitBody` |
 | Package architecture | `DEBARCH_MAP` in the `Makefile`, keyed by asset name (`amd64`, `arm64`), one table driving both packaging and layout |
-| apt source | `make repo` runs `packaging/repo/index.sh`: the `.deb` goes into the shared `pool/main/e/easysb/`, and each suite in `APT_SUITES` (`bookworm`, `trixie`, `noble`) gets `dists/<suite>/main/binary-<arch>/Packages` plus a signed `Release` / `InRelease`. The public key and `install.sh` live at the site root |
+| apt source | `make repo` runs `packaging/repo/index.sh`: it writes one flat directory with `Packages` / `Packages.gz`, a signed `Release` / `InRelease` / `Release.gpg`, the public key `easysb-archive-keyring.asc`, `install.sh` and one `.deb` per architecture. The release job attaches those files to the release, which serves as the source root |
 
 `dist/easysb-linux-<asset>` is only an intermediate: `pkg-stage` copies it into the staged tree, `deb-asset` builds the `.deb` there, and neither the release nor the source publishes a bare binary.
 
 The package carries the units but does not enable or start them: a fresh host has no node config, so the panel enables and starts services only after the user configures them. Because the packaged units live in `/usr/lib/systemd/system` while the panel writes its own into `/etc/systemd/system`, the panel's copy takes precedence while it exists and the packaged copy is a fallback; the two never fight over the same path.
 
-The fixed address apt needs is hosted on GitHub Pages (`sb.kejizero.xyz`) rather than on a second release tag: the release workflow builds `dist/repo`, signs it with the release key, and deploys it with `actions/deploy-pages`, so the one-command `install.sh` can write a source entry that never changes. The site root carries `install.sh`, the public key `easysb-archive-keyring.asc`, the shared `pool/` and the per-suite `dists/`; a `CNAME` file pins the custom domain and `.nojekyll` stops Pages from running Jekyll over the whole tree.
+The fixed address apt needs is the GitHub Release itself: the release workflow builds `dist/repo` (a flat apt repository), signs it with the release key, and attaches every file to the release, so the one-command `install.sh` can write a source entry (`https://github.com/MinimaxFlora/EasySB/releases/latest/download`) that never changes. That one directory carries `install.sh`, the public key `easysb-archive-keyring.asc`, `Packages`/`Packages.gz`, the signed `Release`/`InRelease`/`Release.gpg` and one `.deb` per architecture; a single package serves every distribution, so there is no `dists/` split and no `pool/`.
 
 ## Package responsibilities
 

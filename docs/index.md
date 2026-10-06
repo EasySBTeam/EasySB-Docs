@@ -21,7 +21,7 @@ hero:
 
 features:
   - title: 一条命令安装
-    details: 与 get.docker.com 同形状的安装脚本，自动识别 Debian / Ubuntu 套件，装好签名软件源后交给 apt，之后 apt upgrade 即可升级。
+    details: 与 get.docker.com 同形状的安装脚本，核对 Debian / Ubuntu 发行版，装好签名软件源后交给 apt，之后 apt upgrade 即可升级。
   - title: 五协议开箱即用
     details: AnyTLS、Hysteria2、TUIC v5、VLESS + Vision + Reality、VMess + WebSocket + TLS，端口逐一编排，账号凭据逐人独立。
   - title: 内核已编译进面板
@@ -37,10 +37,10 @@ features:
 
 ## 一条命令安装
 
-安装脚本把本机 `/etc/os-release` 映射到已发布的三个套件之一（`bookworm`、`trixie`、`noble`），写入签名 apt 软件源，再由 apt 安装候选版本。软件源由 GitHub Pages 固定发布在 `https://sb.kejizero.xyz`，地址不变，所以一条软件源配置可以一直用下去。
+安装脚本核对本机 `/etc/os-release` 是否在受支持的发行版内，写入签名 apt 软件源，再由 apt 安装候选版本。软件源就是 GitHub Release 本身，固定在 `https://github.com/MinimaxFlora/EasySB/releases/latest/download`，地址不变，所以一条软件源配置可以一直用下去。
 
 ```bash
-curl -fsSL https://sb.kejizero.xyz/install.sh | sudo bash
+curl -fsSL https://github.com/MinimaxFlora/EasySB/releases/latest/download/install.sh | sudo bash
 ```
 
 安装完成后以快捷指令启动：
