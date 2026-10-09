@@ -77,6 +77,7 @@ The fixed address apt needs is the GitHub Release itself: the release workflow b
 | `internal/state` | Read and write `easysb.conf`; protocol keys, default ports, default parameters |
 | `internal/config` | Render the sing-box server configuration from state |
 | `internal/deploy` | Deploy path shared by the panel and the subscription service: render, write `config.json` (`0600`), have the carried core accept it, restart the core, record which accounts are live |
+| `internal/provision` | Headless deployment: drives the nodes, certificate, accounts and subscription of a whole deployment from one JSON manifest, the body of `--provision` |
 | `internal/sbcore` | The compiled-in core: `Run` (node, `easysb core run`), `Check` (accept a config with the real core), `Version`, and the `with_v2ray_api` capability as a tagged file pair |
 | `internal/download` | The only HTTP-to-file path left: the panel's own release and the BBR kernel package, with progress readings |
 | `internal/cert` | In-process ACME through lego (HTTP-01 standalone): accounts, issue / renew / remove certificates, expiry checks, renewal timer unit, self-signed fallback |
@@ -146,6 +147,7 @@ graph TD
     A --> G["--version: print the version line"]
     A --> H["--serve: subd.Options.Run (HTTP + accounting)"]
     A --> I["--unlock: print the unlock report to stdout"]
+    A --> J["--provision: provision.Run (manifest)"]
 ```
 
 `core` is the only subcommand: `core run -c <config>` is the node the service unit starts, `core check` validates a configuration with the same core, and `core version` prints the sing-box version this binary carries.

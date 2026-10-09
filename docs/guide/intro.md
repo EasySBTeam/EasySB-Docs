@@ -47,6 +47,7 @@ easysb core run -c /etc/sing-box/config.json
 | 账号与流量 | 每个账号在每个协议上拥有独立凭据，支持流量限额、有效期、可用协议、启用开关、重置流量与更换令牌 |
 | 订阅生成 | 每个账号一个 `/sub/<令牌>` 地址，内置服务按客户端自动选择格式，并通过 `Subscription-Userinfo` 上报用量 |
 | 证书管理 | 进程内申请、查看、切换激活、删除与自动续期 Let's Encrypt 证书，无需外部脚本 |
+| 无终端部署 | `sb --provision` 用一份 JSON 清单一次幂等地部署节点、证书与账号，无需 TTY |
 | 端口跳跃 | Hysteria2 默认 `2080:3000`，自动下发 iptables / nftables DNAT，并生成开机恢复单元 |
 | 服务管理 | 启动、停止、重启、查看状态与开机自启 |
 | BBR 加速 | 查看并启用 BBR，安装 Linux-BBR-v3 发布的预编译 BBRv3 内核，卸装与清空配置都在面板内 |

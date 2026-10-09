@@ -32,7 +32,7 @@ Every user-facing string flows through `internal/i18n`. The language is a `Lang`
 
 ## Non-interactive entry points
 
-Any capability a boot unit needs must be reachable without a TTY. `--apply-firewall` is the model: it loads state, applies rules, writes the unit and exits. The TUI calls the same set of package functions.
+Any capability a boot unit needs must be reachable without a TTY. `--apply-firewall` is the model: it loads state, applies rules, writes the unit and exits. The TUI calls the same set of package functions. `--provision` is the other end of that principle: a whole deployment, certificate, nodes, accounts and subscription, is an idempotent operation over one JSON manifest, again calling only the package functions the panel uses, with the difference that no TUI is in front collecting input. The manifest describes a desired state rather than a script, so a re-run neither recreates nodes nor rotates a subscription token already handed out.
 
 ## A dark, quiet terminal interface
 

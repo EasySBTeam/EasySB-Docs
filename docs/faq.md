@@ -51,11 +51,12 @@ VLESS + Vision + Reality 不依赖证书，不需要域名，可以只用它部�
 | `sb --tool list` | 列出工具箱全部条目 |
 | `sb --tool <id>` | 运行某一项并输出纯文本表格 |
 | `sb --unlock` | 一次跑完 17 项解锁检测并输出报告 |
+| `sb --provision <清单>` | 按 JSON 清单完成整台部署并打印订阅地址（`-` 表示从标准输入读取） |
 | `sb --render --width W --height H` | 渲染一次仪表盘后退出，可加 `--screen <id>` 渲染子页面 |
 | `easysb core check -c <配置>` | 用编译进来的引擎校验节点配置 |
 | `easysb core version` | 打印本二进制携带的内核版本与能力位 |
 
-用于开机单元的入口也遵循同样原则，例如 `--apply-firewall` 加载状态、应用规则、写下单元后立即退出，全部不需要 TTY。
+其中 `sb --provision` 把节点、证书与账号一次做完，清单格式与用法见 [无终端部署](/guide/provision)。用于开机单元的入口也遵循同样原则，例如 `--apply-firewall` 加载状态、应用规则、写下单元后立即退出，全部不需要 TTY。
 
 ## 怎么切换语言和界面外观？
 

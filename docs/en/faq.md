@@ -51,11 +51,12 @@ Many capabilities have entry points that do not depend on a TTY:
 | `sb --tool list` | List every toolbox item |
 | `sb --tool <id>` | Run one item and print a plain-text table |
 | `sb --unlock` | Run all 17 unlock checks at once and print a report |
+| `sb --provision <manifest>` | Deploy a whole host from a JSON manifest and print the subscription URLs (`-` reads standard input) |
 | `sb --render --width W --height H` | Render one dashboard frame and exit; add `--screen <id>` to render a subpage |
 | `easysb core check -c <config>` | Validate a node config with the compiled-in engine |
 | `easysb core version` | Print the core version and capability bits this binary carries |
 
-Entry points used by boot units follow the same principle, for example `--apply-firewall` loads state, applies rules, writes the unit and exits immediately, all without a TTY.
+`sb --provision` does the nodes, the certificate and the accounts in one pass; see [Headless Deployment](/en/guide/provision) for the manifest format. Entry points used by boot units follow the same principle, for example `--apply-firewall` loads state, applies rules, writes the unit and exits immediately, all without a TTY.
 
 ## How do I switch language and interface appearance?
 

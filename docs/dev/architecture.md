@@ -77,6 +77,7 @@ apt 需要的固定地址就是 GitHub Release 本身：发布工作流构建 `d
 | `internal/state` | 读写 `easysb.conf`；协议键、默认端口、默认参数 |
 | `internal/config` | 由状态渲染 sing-box 服务端配置 |
 | `internal/deploy` | 面板与订阅服务共用的部署路径：渲染、写入 `config.json`（`0600`）、让所携带的内核接受它、重启内核、记录哪些账号在线 |
+| `internal/provision` | 无终端部署：从一份 JSON 清单驱动节点、证书、账号与订阅的完整部署，是 `--provision` 的实现主体 |
 | `internal/sbcore` | 编译进来的内核：`Run`（节点，`easysb core run`）、`Check`（由真实内核接受配置）、`Version`，以及作为带标签文件对的 `with_v2ray_api` 能力 |
 | `internal/download` | 仅存的 HTTP 到文件路径：面板自身发布与 BBR 内核包，带进度读数 |
 | `internal/cert` | 通过 lego 在进程内做 ACME（HTTP-01 standalone）：账号、签发/续期/移除证书、到期判断、续期定时器单元、自签名回退 |
@@ -146,6 +147,7 @@ graph TD
     A --> G["--version: 打印版本行"]
     A --> H["--serve: subd.Options.Run（HTTP + 计费）"]
     A --> I["--unlock: 在 stdout 输出解锁报告"]
+    A --> J["--provision: provision.Run（清单）"]
 ```
 
 `core` 是唯一的子命令：`core run -c <config>` 是服务单元启动的节点，`core check` 用同一内核校验配置，`core version` 打印这个二进制携带的 sing-box 版本。

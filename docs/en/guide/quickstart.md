@@ -48,6 +48,10 @@ sb --language C
 sb --language E
 ```
 
+::: tip
+To skip the step-by-step menu, the nodes, certificate and accounts can go into one JSON manifest and be deployed in a single `sb --provision` run; see [Headless Deployment](/en/guide/provision).
+:::
+
 ## Step 3: First-run flow
 
 Every operation starts from the main menu. A first deployment only needs the following order:
@@ -81,4 +85,5 @@ The account token is both the subscription access key and the user name used for
 
 - To see why a subscription returns 403, or how to delete only one account: [FAQ](/en/faq).
 - For every entry point and flag: [Introduction](/en/guide/intro).
+- To deploy unattended from a manifest: [Headless Deployment](/en/guide/provision).
 - To uninstall or migrate: [Uninstall](/en/guide/uninstall).

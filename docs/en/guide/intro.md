@@ -47,6 +47,7 @@ Except for VLESS + Vision + Reality, every protocol needs a domain that resolves
 | Accounts and traffic | Each account has independent credentials per protocol, with quota, expiry, allowed protocols, an enable switch, traffic reset and token rotation |
 | Subscription generation | One `/sub/<token>` per account, the built-in service picks the format from the client, and reports usage through `Subscription-Userinfo` |
 | Certificate management | Request, view, switch active, delete and auto-renew Let's Encrypt certificates in-process, with no external script |
+| Headless deployment | `sb --provision` deploys the nodes, certificate and accounts from one JSON manifest in a single idempotent run, with no TTY |
 | Port hopping | Hysteria2 defaults to `2080:3000`, applies iptables / nftables DNAT automatically and writes a boot-time restore unit |
 | Service management | Start, stop, restart, view status and enable on boot |
 | BBR acceleration | View and enable BBR, install the prebuilt BBRv3 kernel published by Linux-BBR-v3, remove it and clear settings from the panel |

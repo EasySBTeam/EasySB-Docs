@@ -19,6 +19,10 @@ This version narrows the release scope to Debian / Ubuntu and moves the release 
 - `make pkg-stage` UPX-compresses the binary in the staged tree, so the release assets and the apt source are the same bytes.
 - Only the latest release is kept: the workflow trims the previous release and its tag after publishing.
 
+### Headless deployment
+
+- Add `sb --provision FILE`: one JSON manifest performs the nodes, certificate and accounts steps in a single run, issuing the certificate, writing the two store files, rendering and enabling the service units, and finally printing each account's subscription URL. The manifest describes a desired state rather than a script, so a re-run reuses existing nodes by name or protocol plus port and keeps each account's subscription token and credentials; `--provision -` reads standard input for scripts and the deploy skill to run unattended. The manifest format is documented under [Headless Deployment](/en/guide/provision).
+
 ### Upgrade and self-update
 
 - Self-update goes through apt: `internal/update` compares the installed version with `dpkg-query`, upgrades the `easysb` package through `apt-get install`, and no longer downloads an archive to self-replace a running binary. The panel's `Update version` entry and asset names follow.
